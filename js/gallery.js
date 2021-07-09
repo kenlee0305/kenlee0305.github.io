@@ -8,9 +8,13 @@ function activateGallery() {
   let description = galleryInfo.querySelector(".description");  
 
   thumbnails.forEach(function (thumbnail) {
+    // Preload large images.
+    let newImageSrc = thumbnail.dataset.largeVersion;
+    let largeVersion = new Image();
+    largeVersion.src = newImageSrc;
+
     thumbnail.addEventListener("click", function () {
       // Set clicked image as main image.
-      let newImageSrc = thumbnail.dataset.largeVersion;
       mainImage.setAttribute("src", newImageSrc);
 
       // Change which image is current.
@@ -19,6 +23,10 @@ function activateGallery() {
       thumbnail.parentNode.classList.add(currentClass);
 
       // Update image info.
+      let galleryInfo = document.querySelector("#gallery-info");
+      let title = galleryInfo.querySelector(".title");
+      let description = galleryInfo.querySelector(".description");
+
       title.innerHTML = thumbnail.dataset.title;
       description.innerHTML = thumbnail.dataset.description;
     });
